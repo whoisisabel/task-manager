@@ -1,3 +1,6 @@
+body {
+  background-color: #f9fbfc;
+}
 
 .App {
   text-align: center;
@@ -6,6 +9,19 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.full-height{
+  height: -webkit-fill-available
+}
+
+.MuiButtonBase-root:disabled {
+  cursor: not-allowed;
+  background-color: #0279c0 !important;
+  color: white !important;
+}
+.MuiOutlinedInput-input span{ 
+  font-size: 14px !important;
 }
 
 @media (prefers-reduced-motion: no-preference) {
