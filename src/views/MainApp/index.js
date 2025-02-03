@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { useTasks } from "../../hooks/useTasks";
 import MenuAppBar from "../../components/Menu/MenuAppBar";
 import SearchInput from "../../components/Input/SearchInput";
-import TodoList from "./TodoList";
-import { Tasks } from "../../utils/test";
-import { filterByKey, filterBySearch } from "../../utils/sharedFunctions";
 import Footer from "../../components/Footer";
+import { filterByKey, filterBySearch } from "../../utils/sharedFunctions";
+import TodoList from "./TodoList";
 
 const VIEWS = [
   {
     label: "To-do",
-    value: "to-do",
+    value: "TODO",
   },
   {
     label: "In Progress",
@@ -23,7 +24,7 @@ const VIEWS = [
 ];
 
 export default function Todo() {
-  const [taskList, setTaskList] = useState(Tasks);
+  const { tasks, addTask, updateTask, deleteTask, loading } = useTasks();
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -33,13 +34,15 @@ export default function Todo() {
     deadline: null,
   });
   const [searchItem, setSearchItem] = useState("");
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [openTask, setOpenTask] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+    setOpenTask(false);
     setTask({
       title: "",
       description: "",
@@ -65,62 +68,41 @@ export default function Todo() {
     }));
   };
 
-  const handleSearch = () => {
-    console.log("searching . . .");
-  };
-
   const handleTask = () => {
-    setLoading(true);
-    setTaskList((prevTasks) => [...prevTasks, task]);
-    setTimeout(() => {
-      setLoading(false);
-      handleClose();
-    }, 1000);
+    addTask({
+      title: task.title,
+      description: task.description,
+      deadline: task.deadline,
+      priority: task.priority,
+    });
   };
 
   const handleUpdateTask = () => {
-    setLoading(true);
-    const updatedTask = task;
-
-    setTaskList((prevTasks) =>
-      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-    );
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-      setOpenTask(false);
-    }, 1000);
+    updateTask(task.id, { status: task.status });
   };
 
   const handleDeleteTask = () => {
-    setLoading(true);
-    const updatedTask = task;
-
-    setTaskList((prevTasks) =>
-      prevTasks.filter((task) => task.id !== updatedTask.id)
-    );
-
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-      setOpenTask(false);
-    }, 1000);
+    deleteTask(task.id);
   };
 
-  const filteredData = searchItem
-    ? filterBySearch(taskList, searchItem)
-    : taskList;
+  useEffect(() => {
+    handleClose();
+  }, [tasks]);
+
+  useEffect(() => {
+    const auth = localStorage.getItem("token");
+    if (!auth) {
+      navigate("/");
+    }
+  }, []);
+  const filteredData = searchItem ? filterBySearch(tasks, searchItem) : tasks;
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <MenuAppBar />
         <div className="p-6 flex justify-end">
-          <SearchInput
-            input={searchItem}
-            handleInput={setSearchItem}
-            handleSearch={handleSearch}
-          />
+          <SearchInput input={searchItem} handleInput={setSearchItem} />
         </div>
         <div className="px-6 pb-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2">
           {VIEWS.map((view, index) => (

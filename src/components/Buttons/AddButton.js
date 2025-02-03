@@ -9,6 +9,7 @@ export default function AddButton({ handleClick }) {
       disableFocusRipple
       aria-label="add"
       onClick={() => handleClick()}
+      sx={{ padding: 0, paddingRight: 1 }}
     >
       <AddIcon />
     </IconButton>

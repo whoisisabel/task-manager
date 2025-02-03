@@ -22,10 +22,14 @@ export default function TodoList({
   return (
     <Paper variant="outlined" className="p-4">
       <div className="flex items-center">
-        <AddButton handleClick={handleOpen} />
+        <div className={title!=="To-do" ? "hidden" : null}>
+          <AddButton handleClick={handleOpen} />
+        </div>
         <TodoForm input={input} handleInput={handleInput} />
         <h3 className="font-semibold">{title}</h3>
-        <div className="ml-2 p-0.5 px-2 text-xs rounded bg-blue-100 text-gray">{data.length}</div>
+        <div className="ml-2 p-0.5 px-2 text-xs rounded bg-blue-100 text-gray">
+          {data.length}
+        </div>
       </div>
       {data && data.length > 0 ? (
         <div className="bg-gray-100 p-4 rounded-lg max-h-[450px] overflow-scroll">
@@ -35,6 +39,7 @@ export default function TodoList({
         </div>
       ) : null}
       <TodoForm
+        title={title}
         loading={loading}
         input={input}
         open={open}

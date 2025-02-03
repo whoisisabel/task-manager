@@ -1,54 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import LoginLogo from "../../components/Logo";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import ResetForm from "./ResetForm";
 
 export default function Login() {
+  const { signup, login, loading } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [view, setView] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
-    setLoading(true);
-    const payload = {
-      username: username,
-      password: password,
-    };
-
-    console.log("Login Payload:", payload);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    login(username, password);
   };
 
   const handleSignUp = () => {
-    setLoading(true);
-    const payload = {
-      username: username,
-      password: password,
-    };
-
-    console.log("SignUp Payload:", payload);
-    setTimeout(() => {
-      setLoading(false);
-      setView(0);
-    }, 1000);
+    signup(username, password);
   };
 
   const handleReset = () => {
-    setLoading(true);
-    const payload = {
-      username: username,
-    };
-
-    console.log("Reset Payload:", payload);
     setTimeout(() => {
-      setLoading(false);
       setView(0);
     }, 1000);
   };
+
+  useEffect(() => {
+    setUsername("");
+    setPassword("");
+  }, [view]);
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   const handleAuthView = (view) => {
     switch (view) {
@@ -103,7 +87,9 @@ export default function Login() {
             />
           </div>
         </div>
-        <div className="bg-white p-10 sm:pt-0 lg:p-40">{handleAuthView(view)}</div>
+        <div className="bg-white p-10 sm:pt-0 lg:p-40">
+          {handleAuthView(view)}
+        </div>
       </div>
     </div>
   );

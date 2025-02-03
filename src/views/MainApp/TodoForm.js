@@ -10,8 +10,8 @@ import SelectInput from "../../components/Input/SelectInput";
 import MultilineTextInput from "../../components/Input/MultilineTextInput";
 import DateInput from "../../components/Input/DateInput";
 import FormButton from "../../components/Buttons/FormButton";
-import { validatePayload } from "../../utils/sharedFunctions";
 import DeleteButton from "../../components/Buttons/DeleteButton";
+import { validatePayload } from "../../utils/sharedFunctions";
 
 const PRIORITY = [
   { label: "Low", value: "low" },
@@ -22,7 +22,7 @@ const PRIORITY = [
 const STATUS = [
   {
     label: "To-do",
-    value: "to-do",
+    value: "TODO",
   },
   {
     label: "In Progress",
@@ -88,6 +88,7 @@ const style = {
 };
 
 export default function TodoForm({
+  title,
   loading,
   input,
   open,
@@ -116,7 +117,7 @@ export default function TodoForm({
             <Typography id="spring-modal-title" variant="h6" component="h2">
               {openTask ? "Edit" : "Add"} Task
             </Typography>
-            {openTask && input.status === "to-do" ? (
+            {openTask && input.status === "TODO" ? (
               <DeleteButton handleClick={handleDelete} />
             ) : null}
           </div>
@@ -147,14 +148,17 @@ export default function TodoForm({
               handleInput={handleInput}
               disabled={loading}
             />
-            <SelectInput
-              id={"status"}
-              label={"Task Status"}
-              selectArray={STATUS}
-              input={input.status}
-              handleInput={handleInput}
-              disabled={loading}
-            />
+            {openTask ? (
+              <SelectInput
+                id={"status"}
+                label={"Task Status"}
+                selectArray={STATUS}
+                input={input.status}
+                handleInput={handleInput}
+                disabled={loading}
+              />
+            ) : null}
+
             <SelectInput
               id={"priority"}
               label={"Task Priority"}
@@ -175,7 +179,7 @@ export default function TodoForm({
                 label={"Create"}
                 loading={loading}
                 action={handleSubmit}
-                disabled={!validatePayload(input)}
+                disabled={false}
               />
             )}
           </div>
