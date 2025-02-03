@@ -94,7 +94,7 @@ export default function Todo() {
     if (!auth) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
   const filteredData = searchItem ? filterBySearch(tasks, searchItem) : tasks;
 
   return (

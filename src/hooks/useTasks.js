@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useCallback } from "react";
 import { apiRequest } from "../utils/api";
 
@@ -23,7 +24,7 @@ export const useTasks = () => {
 
   useEffect(() => {
     if (token) fetchTasks();
-  }, []);
+  }, [fetchTasks, token]);
 
   const addTask = async (task) => {
     setLoading(true);
