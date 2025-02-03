@@ -1,7 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import { blue } from "@mui/material/colors";
 
 export default function FormButton({ label, loading, action, disabled }) {
   const ColorButton = styled(Button)(({ theme }) => ({

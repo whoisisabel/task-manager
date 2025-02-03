@@ -11,8 +11,8 @@ body {
   pointer-events: none;
 }
 
-.full-height{
-  height: -webkit-fill-available
+.full-height {
+  height: -webkit-fill-available;
 }
 
 .MuiButtonBase-root:disabled {
@@ -20,8 +20,24 @@ body {
   background-color: #0279c0 !important;
   color: white !important;
 }
-.MuiOutlinedInput-input span{ 
+.MuiOutlinedInput-input span {
   font-size: 14px !important;
+}
+.MuiBackdrop-root {
+  background-color: #0279c033 !important;
+}
+.MuiMenu-root > .MuiBackdrop-root{
+  background-color: transparent !important;
+}
+.MuiIconButton-root{
+  color: #0279c0 !important;
+}
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @media (prefers-reduced-motion: no-preference) {

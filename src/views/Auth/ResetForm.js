@@ -16,6 +16,7 @@ export default function ResetForm({
       </h3>
       <div className="flex flex-col mt-10">
         <TextInput
+          id={"emailAddress"}
           label={"Email Address"}
           placeholder={"Enter your email address"}
           input={username}

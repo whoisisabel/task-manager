@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoginLogo from "../../components/Logo/LoginLogo";
+import LoginLogo from "../../components/Logo";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import ResetForm from "./ResetForm";

@@ -27,6 +27,7 @@ export default function LoginForm({
           </button>
         </div>
         <TextInput
+          id={"emailAddress"}
           label={"Email Address"}
           placeholder={"Enter your email address"}
           input={username}

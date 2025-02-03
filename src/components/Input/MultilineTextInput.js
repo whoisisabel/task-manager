@@ -1,7 +1,7 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 
-export default function TextInput({
+export default function MultilineTextInput({
   id,
   label,
   placeholder,
@@ -11,14 +11,15 @@ export default function TextInput({
   disabled,
 }) {
   return (
-    <div className="mb-3 w-full">
+    <div className="mb-1 w-full">
       <TextField
-      className="border-cyan-700"
         id={id}
         placeholder={placeholder}
         label={label}
         variant="outlined"
         fullWidth
+        multiline
+        rows={4}
         value={input}
         required={required}
         disabled={disabled}
