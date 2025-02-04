@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5001";
+const API_URL = "https://task-manager-backend-319y.onrender.com" || "http://localhost:5001";
 
 export const apiRequest = async (endpoint, method = 'GET', body = null, token = null) => {
     const headers = { 'Content-Type': 'application/json' };
