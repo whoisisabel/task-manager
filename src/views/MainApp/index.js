@@ -88,7 +88,7 @@ export default function Todo() {
   };
 
   const handleUpdateTask = () => {
-    updateTask(task.id, { status: task.status });
+    updateTask(task.id, task);
   };
 
   const handleDeleteTask = () => {
