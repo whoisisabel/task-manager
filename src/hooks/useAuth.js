@@ -4,23 +4,32 @@ import { apiRequest } from "../utils/api";
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
+  const [signupSuccess, setSignupSuccess] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const navigate = useNavigate();
 
+  const handleClose = () => setSnackbarOpen(false);
+
+  const handleSignUpSuccess = ()=> setSignupSuccess(false);
+
   const signup = async (email, password) => {
     setLoading(true);
+    handleSignUpSuccess();
     try {
       await apiRequest("auth/signup", "POST", {
         email,
         password,
       });
+      setSignupSuccess(true);
       setLoading(false);
       setError(null);
     } catch (err) {
       setLoading(false);
       setError(err.message);
+      setSnackbarOpen(true);
     }
   };
 
@@ -36,7 +45,17 @@ export const useAuth = () => {
     } catch (err) {
       setLoading(false);
       setError(err.message);
+      setSnackbarOpen(true);
     }
+  };
+
+  const reset = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setError("Not part of the assignment. Haha!");
+      setSnackbarOpen(true);
+    }, 2000);
   };
 
   const logout = () => {
@@ -45,5 +64,17 @@ export const useAuth = () => {
     setError(null);
   };
 
-  return { user, signup, login, logout, error, loading };
+  return {
+    user,
+    signup,
+    login,
+    logout,
+    reset,
+    signupSuccess,
+    error,
+    loading,
+    snackbarOpen,
+    handleClose,
+    handleSignUpSuccess
+  };
 };

@@ -6,8 +6,11 @@ export const useTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const token = localStorage.getItem("token");
+
+  const handleClose = () => setSnackbarOpen(false);
 
   const fetchTasks = useCallback(async () => {
     setLoading(true);
@@ -19,12 +22,13 @@ export const useTasks = () => {
     } catch (err) {
       setLoading(false);
       setError(err.message);
+      setSnackbarOpen(true);
     }
   });
 
   useEffect(() => {
     if (token) fetchTasks();
-  }, [fetchTasks, token]);
+  }, []);
 
   const addTask = async (task) => {
     setLoading(true);
@@ -35,6 +39,7 @@ export const useTasks = () => {
     } catch (err) {
       setLoading(false);
       setError(err.message);
+      setSnackbarOpen(true);
     }
   };
 
@@ -47,6 +52,7 @@ export const useTasks = () => {
     } catch (err) {
       setLoading(false);
       setError(err.message);
+      setSnackbarOpen(true);
     }
   };
 
@@ -59,8 +65,18 @@ export const useTasks = () => {
     } catch (err) {
       setLoading(false);
       setError(err.message);
+      setSnackbarOpen(true);
     }
   };
 
-  return { tasks, addTask, updateTask, deleteTask, error, loading };
+  return {
+    tasks,
+    addTask,
+    updateTask,
+    deleteTask,
+    error,
+    loading,
+    snackbarOpen,
+    handleClose,
+  };
 };

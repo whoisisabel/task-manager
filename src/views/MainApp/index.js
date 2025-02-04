@@ -5,6 +5,7 @@ import { useTasks } from "../../hooks/useTasks";
 import MenuAppBar from "../../components/Menu/MenuAppBar";
 import SearchInput from "../../components/Input/SearchInput";
 import Footer from "../../components/Footer";
+import SnackbarMessage from "../../components/SnackbarMessage";
 import { filterByKey, filterBySearch } from "../../utils/sharedFunctions";
 import TodoList from "./TodoList";
 
@@ -24,7 +25,16 @@ const VIEWS = [
 ];
 
 export default function Todo() {
-  const { tasks, addTask, updateTask, deleteTask, loading } = useTasks();
+  const {
+    tasks,
+    addTask,
+    updateTask,
+    deleteTask,
+    loading,
+    error,
+    snackbarOpen,
+    handleClose,
+  } = useTasks();
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -40,7 +50,7 @@ export default function Todo() {
   const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {
+  const handleCloseTask = () => {
     setOpen(false);
     setOpenTask(false);
     setTask({
@@ -86,7 +96,7 @@ export default function Todo() {
   };
 
   useEffect(() => {
-    handleClose();
+    handleCloseTask();
   }, [tasks]);
 
   useEffect(() => {
@@ -120,10 +130,16 @@ export default function Todo() {
               handleDelete={handleDeleteTask}
               handleOpen={handleOpen}
               handleOpenTask={handleOpenTask}
-              handleClose={handleClose}
+              handleClose={handleCloseTask}
             />
           ))}
         </div>
+        <SnackbarMessage
+          message={error}
+          severity="error"
+          open={snackbarOpen}
+          onClose={handleClose}
+        />
       </div>
       <Footer />
     </div>

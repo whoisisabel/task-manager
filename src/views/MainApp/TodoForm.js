@@ -113,7 +113,7 @@ export default function TodoForm({
     >
       <Fade in={open}>
         <Box sx={style} borderRadius={2}>
-          <div className="pb-4 flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <Typography id="spring-modal-title" variant="h6" component="h2">
               {openTask ? "Edit" : "Add"} Task
             </Typography>

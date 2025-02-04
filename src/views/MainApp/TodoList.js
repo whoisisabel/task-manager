@@ -32,7 +32,7 @@ export default function TodoList({
         </div>
       </div>
       {data && data.length > 0 ? (
-        <div className="bg-gray-100 p-4 rounded-lg max-h-[450px] overflow-scroll">
+        <div className="bg-gray-100 mt-2 p-4 rounded-lg max-h-[450px] overflow-scroll">
           {data.map((task, index) => (
             <TodoItem key={index} data={task} handleOpenTask={handleOpenTask} />
           ))}

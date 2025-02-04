@@ -1,20 +1,24 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
-export default function SnackbarMessage({ open, handleClose, message }) {
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+export default function SnackbarMessage({ message, severity, open, onClose }) {
   const vertical = "bottom";
   const horizontal = "right";
-
   return (
-    <Box sx={{ width: 500 }}>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        message={message}
-        key={vertical + horizontal}
-      />
-    </Box>
+    <Snackbar
+      open={open}
+      autoHideDuration={4000}
+      onClose={onClose}
+      key={vertical + horizontal}
+    >
+      <Alert onClose={onClose} severity={severity} sx={{ width: "100%" }}>
+        {message}
+      </Alert>
+    </Snackbar>
   );
 }

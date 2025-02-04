@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import LoginLogo from "../../components/Logo";
+import SnackbarMessage from "../../components/SnackbarMessage";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import ResetForm from "./ResetForm";
 
 export default function Login() {
-  const { signup, login, loading } = useAuth();
+  const {
+    login,
+    signup,
+    reset,
+    signupSuccess,
+    loading,
+    error,
+    snackbarOpen,
+    handleClose,
+    handleSignUpSuccess,
+  } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [view, setView] = useState(0);
@@ -20,15 +31,20 @@ export default function Login() {
   };
 
   const handleReset = () => {
-    setTimeout(() => {
-      setView(0);
-    }, 1000);
+    reset();
   };
 
   useEffect(() => {
     setUsername("");
     setPassword("");
   }, [view]);
+
+  useEffect(() => {
+    if (signupSuccess) {
+      setView(0);
+      handleSignUpSuccess();
+    }
+  }, [handleSignUpSuccess, signupSuccess]);
 
   useEffect(() => {
     localStorage.clear();
@@ -90,6 +106,12 @@ export default function Login() {
         <div className="bg-white p-10 sm:pt-0 lg:p-40">
           {handleAuthView(view)}
         </div>
+        <SnackbarMessage
+          message={error}
+          severity="error"
+          open={snackbarOpen}
+          onClose={handleClose}
+        />
       </div>
     </div>
   );
